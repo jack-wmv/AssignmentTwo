@@ -1,3 +1,9 @@
+/*
+Programmer: Jackson Landry 100302201
+Date: 17-11-2021
+Purpose: This is the filter, which is used when the user uses the search bar to look for a specific entry in the database.
+ */
+
 package com.example.assignmenttwo;
 
 import android.widget.Filter;

@@ -1,3 +1,9 @@
+/*
+Programmer: Jackson Landry 100302201
+Date: 17-11-2021
+Purpose: This is the edit location activity, which is displayed when the user wants to change the address/latitude/longitude of an already existing entry.
+ */
+
 package com.example.assignmenttwo;
 
 import androidx.appcompat.app.ActionBar;

@@ -1,3 +1,9 @@
+/*
+Programmer: Jackson Landry 100302201
+Date: 17-11-2021
+Purpose: This is the database helper, this is used when a change needs to be made to the database, including creating the table, and inserting, updating, deleting, and getting data.
+ */
+
 package com.example.assignmenttwo;
 
 import android.annotation.SuppressLint;
@@ -7,11 +13,19 @@ import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Address;
+import android.location.Geocoder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.assignmenttwo.activities.MainActivity;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 public class DataBaseHelper extends SQLiteOpenHelper{
     public DataBaseHelper(@Nullable Context context) {
@@ -63,16 +77,18 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    //COMMENTS HERE
+    //method to get all the data from the database, gets passed how to order
     public ArrayList<Model> getAllData(String orderBy){
 
         ArrayList<Model> arrayList = new ArrayList<>();
 
+        //query to select all items from the table and order by whatever was specified
         String selectQuery = "SELECT * FROM " + Constants.LOCATIONS_TABLE_NAME + " ORDER BY "+ orderBy;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
+        //if there is another entry in the database, add to the arraylist
         if(cursor.moveToNext()) {
             do {
                 @SuppressLint("Range") Model model = new Model(
@@ -85,6 +101,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
             } while(cursor.moveToNext());
         }
         db.close();
+        //return a completed arraylist of all entries
         return arrayList;
     }
 }

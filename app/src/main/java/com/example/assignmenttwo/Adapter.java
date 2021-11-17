@@ -1,3 +1,9 @@
+/*
+Programmer: Jackson Landry 100302201
+Date: 17-11-2021
+Purpose: This is the adapter, this class is used to handle when a user wants to make changes to the entries
+ */
+
 package com.example.assignmenttwo;
 
 import android.app.AlertDialog;
@@ -36,17 +42,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> implements Fil
     CustomFilter filter;
     DataBaseHelper dataBaseHelper;
 
+    //adapter constructor
     public Adapter(Context context, ArrayList<Model> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         this.filterList = arrayList;
         dataBaseHelper = new DataBaseHelper(context);
-    }
-
-    public void updateList(ArrayList<Model> newList){
-        arrayList = new ArrayList<>();
-        arrayList.addAll(newList);
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -60,6 +61,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> implements Fil
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
+        //gets values for address, longitude, latitude and the primary key ID for updating
         Model model = arrayList.get(position);
 
         String address = model.getAddress();
@@ -73,6 +75,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> implements Fil
         holder.lat.setText("Latitude: " + latitude);
 
 
+        //when button to edit is clicked
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +98,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> implements Fil
         });
     }
 
+    //prompts user to confirm they want to delete the selected location from the database
     private void deleteDialog(final String id){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Delete");
@@ -102,6 +106,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> implements Fil
         builder.setCancelable(false);
         builder.setIcon(R.drawable.ic_baseline_delete_24);
 
+        //user chooses to delete, location is deleted and toast is shown confirming this
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -119,6 +124,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> implements Fil
         });
         builder.create().show();
     }
+
+    //first prompts user asking if they want to update, if user clicks yes then they can edit the longitude and latitude of that location
     private void editDialog(String id, String latitude, String longitude) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Update");
@@ -129,6 +136,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> implements Fil
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                //gets the input latitude and longitude and gets the relevant address from this using geocoder
                 double lat = Double.parseDouble(latitude);
                 double lon = Double.parseDouble(longitude);
                 Geocoder geocoder;

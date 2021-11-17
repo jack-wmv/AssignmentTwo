@@ -1,3 +1,9 @@
+/*
+Programmer: Jackson Landry 100302201
+Date: 17-11-2021
+Purpose: This is the add location activity, in which the user can add locations by entering latitude and longitude. This will be processed and turned into an address using geocoder.
+ */
+
 package com.example.assignmenttwo.activities;
 
 import androidx.appcompat.app.ActionBar;
